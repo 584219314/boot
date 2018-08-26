@@ -1,0 +1,20 @@
+/**
+ * xcwlkj.com Inc.
+ * Copyright (c) 2015-${year} All Rights Reserved.
+ */
+package ${package}.${systemCode}.service;
+
+import org.springframework.stereotype.Service;
+import ${package}.BaseService;
+import ${package}.${systemCode}.mapper.${className}Mapper;
+import ${package}.${systemCode}.model.${className}Entity;
+
+/**
+ * ${comments}服务
+ * @author ${author}
+ * @version $Id: ${className}Service.java, v 0.1 ${datetime} ${author} Exp $
+ */
+@Service
+public class ${className}Service extends BaseService<${className}Entity, ${className}Mapper> {
+
+}

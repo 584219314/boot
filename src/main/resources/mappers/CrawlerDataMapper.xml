@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boot.shedule.mapper.CrawlerDataMapper">
+	<resultMap id="BaseResultMap" type="boot.shedule.model.CrawlerData">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="pice" jdbcType="NUMERIC" property="pice" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="code_id" jdbcType="VARCHAR" property="codeId" />
+	</resultMap>
+	<!-- 列信息 -->
+	<sql id="Base_Column_List">
+				*
+	</sql>
+
+	<!-- 查询 -->
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from crawler_data
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from crawler_data where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="boot.shedule.model.CrawlerData"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into crawler_data
+		( name,
+		pice, url, create_time, update_time, code, code_id )
+		values
+		(
+		#{name,jdbcType=VARCHAR}, #{pice,jdbcType=NUMERIC},
+		#{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}, #{code,jdbcType=VARCHAR},
+		#{codeId,jdbcType=VARCHAR} )
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateByPrimaryKeySelective" parameterType="boot.shedule.model.CrawlerData">
+		update crawler_data
+		<set>
+			<if test="name != null">name = #{name,jdbcType=VARCHAR},</if>
+			<if test="pice != null">pice = #{pice,jdbcType=NUMERIC},</if>
+			<if test="url != null">url = #{url,jdbcType=VARCHAR},</if>
+			<if test="createTime != null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+			<if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+			<if test="code != null">code = #{code,jdbcType=VARCHAR},</if>
+			<if test="codeId != null">code_id = #{codeId,jdbcType=VARCHAR}</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 查询 -->
+	<select id="list" parameterType="boot.shedule.model.CrawlerData"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from crawler_data
+		<where>
+			<if test="name != null"> and name = #{name,jdbcType=VARCHAR}</if>
+			<if test="pice != null"> and pice = #{pice,jdbcType=NUMERIC}</if>
+			<if test="url != null"> and url = #{url,jdbcType=VARCHAR}</if>
+			<if test="createTime != null"> and create_time = #{createTime,jdbcType=TIMESTAMP}</if>
+			<if test="updateTime != null"> and update_time = #{updateTime,jdbcType=TIMESTAMP}</if>
+			<if test="code != null"> and code = #{code,jdbcType=VARCHAR}</if>
+			<if test="codeId != null"> and code_id = #{codeId,jdbcType=VARCHAR}</if>
+		</where>
+	</select>
+
+	<!-- 查询 -->
+	<select id="pageList" parameterType="boot.shedule.model.CrawlerData"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from crawler_data
+		<where>
+			<if test="name != null"> and name = #{name,jdbcType=VARCHAR}</if>
+			<if test="pice != null"> and pice = #{pice,jdbcType=NUMERIC}</if>
+			<if test="url != null"> and url = #{url,jdbcType=VARCHAR}</if>
+			<if test="createTime != null"> and create_time = #{createTime,jdbcType=TIMESTAMP}</if>
+			<if test="updateTime != null"> and update_time = #{updateTime,jdbcType=TIMESTAMP}</if>
+			<if test="code != null"> and code = #{code,jdbcType=VARCHAR}</if>
+			<if test="codeId != null"> and code_id = #{codeId,jdbcType=VARCHAR}</if>
+		</where>
+	</select>
+
+</mapper>

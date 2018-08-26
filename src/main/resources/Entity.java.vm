@@ -1,0 +1,54 @@
+/**
+ * xcwlkj.com Inc.
+ * Copyright (c) 2015-${year} All Rights Reserved.
+ */
+package ${package}.${systemCode}.model;
+#if("${hasBigDecimal}"=="true")
+
+import java.math.BigDecimal;
+#if("${hasDate}"=="true")
+import java.util.Date;
+#end
+#else
+#if("${hasDate}"=="true")
+
+import java.util.Date;
+#end	
+#end
+
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @version $Id: ${className}.java, v 0.1 ${datetime} ${author} Exp $
+ */
+
+public class ${className} extends BaseEntity {
+	/** 序列id */
+	private static final long serialVersionUID = 1L;
+	
+#foreach ($column in $columns)
+	#if($column.comments!="")/** $column.comments */#end
+
+	private $column.attrType $column.attrname;
+#end
+
+#foreach ($column in $columns)
+	#if($column.attrName!="")/** $column.attrName */#end
+
+	public $column.attrType get${column.attrName}(){
+		return this.$column.attrname;
+	}
+	public void set${column.attrName}($column.attrType $column.attrName) {
+        this.$column.attrname=$column.attrName;
+    }
+#end
+
+	@Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+}
