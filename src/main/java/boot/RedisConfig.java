@@ -47,6 +47,15 @@ public class RedisConfig {
 
     @Value("${spring.redis.cluster.max-redirects}")
     private Integer mmaxRedirectsac;
+    @Value("${redis.hostName}")
+    private String HostName;
+    @Value("${redis.port}")
+    private Integer Port;
+    @Value("${redis.password}")
+    private String password;
+    
+    
+    
 
     /**
      * JedisPoolConfig 连接池
@@ -89,11 +98,11 @@ public class RedisConfig {
         //连接池  
         JedisConnectionFactory.setPoolConfig(jedisPoolConfig);  
         //IP地址  
-        JedisConnectionFactory.setHostName("192.168.177.128");  
+        JedisConnectionFactory.setHostName(HostName);  
         //端口号  
-        JedisConnectionFactory.setPort(6379);  
+        JedisConnectionFactory.setPort(Port);  
         //如果Redis设置有密码  
-        //JedisConnectionFactory.setPassword(password);  
+        JedisConnectionFactory.setPassword(password);  
         //客户端超时时间单位是毫秒  
         JedisConnectionFactory.setTimeout(5000);  
         return JedisConnectionFactory; 
