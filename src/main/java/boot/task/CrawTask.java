@@ -11,7 +11,7 @@ import boot.util.RedisUtil;
 
 @Component
 public class CrawTask {
-    @Autowired
+/*    @Autowired
     private RedisUtil redisUtil;
     @Scheduled(fixedRate = 3000)
     public void process(){
@@ -19,5 +19,5 @@ public class CrawTask {
 		redisUtil.set("lsz1", "lsz1", 2120);
 		redisUtil.set("lsz2", "lsz2", 3120);
 		redisUtil.set("lsz3", "lsz3", 4120);
-    }
+    }*/
 }

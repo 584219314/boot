@@ -6,7 +6,15 @@ package boot.shedule.service;
  */
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import boot.shedule.mapper.BaseMapper;
@@ -19,46 +27,18 @@ import com.github.pagehelper.PageHelper;
  * @author danfeng.zhou
  * @version $Id: BaseService.java, v 0.1 2018年4月10日 下午1:27:24 danfeng.zhou Exp $
  */
-public abstract class BaseService<E, M extends BaseMapper<E>> {
-    @Autowired
-    protected M mapper;
+public interface BaseService<E, M extends BaseMapper<E>> {
+	
 
-    public int deleteByPrimaryKey(Long id) {
-        return mapper.deleteByPrimaryKey(id);
-    }
+    public int deleteByPrimaryKey(Long id);
 
-    public int insert(E record) {
-        return mapper.insert(record);
-    }
+    public int insert(E record);
 
-    public E selectByPrimaryKey(Long id) {
-        return mapper.selectByPrimaryKey(id);
-    }
+    public E selectByPrimaryKey(Long id);
 
-    public int updateByPrimaryKeySelective(E record) {
-        return mapper.updateByPrimaryKeySelective(record);
-    }
+    public int updateByPrimaryKeySelective(E record);
 
-    public List<E> list(E record) {
-        return mapper.list(record);
-    }
+    public List<E> list(E record);
 
-    public Page<E> pageList(PageModel<E> pageModel) {
-        Page<E> page = PageHelper.startPage(pageModel.getPageNum(), pageModel.getPageSize()).doSelectPage(() -> {
-            mapper.pageList(pageModel.getParam());
-        });
-        return page;
-    }
-
-    /**
-     * 添加
-     * @param record
-     * @return
-     */
-
-    /**
-     * 更新
-     * @param record
-     * @return
-     */
+    public Page<E> pageList(PageModel<E> pageModel);
 }

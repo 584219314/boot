@@ -2,8 +2,11 @@
  * xcwlkj.com Inc.
  * Copyright (c) 2015-2018 All Rights Reserved.
  */
-package boot.shedule.mapper;
+package boot.shedule.mapper.master;
 
+import org.apache.ibatis.annotations.Mapper;
+
+import boot.shedule.mapper.BaseMapper;
 import boot.shedule.model.CrawlerData;
 
 /**
@@ -11,7 +14,6 @@ import boot.shedule.model.CrawlerData;
  * @author xcwlkj.HangZhou
  * @version $Id: CrawlerData.java, v 0.1 2018年08月23日 下午06:55:06 xcwlkj.HangZhou Exp $
  */
-
-public interface CrawlerDataMapper extends BaseMapper<CrawlerData> {
+public interface CrawlerDataMasterMapper extends BaseMapper<CrawlerData> {
 
 }
