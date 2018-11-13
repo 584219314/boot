@@ -18,5 +18,7 @@ import boot.shedule.service.BaseService;
 public interface CrawlerDataMasterService extends BaseService<CrawlerData, CrawlerDataMasterMapper> {
 
 	public String sayHello(String name);
+	
+	String testAspect();
 
 }

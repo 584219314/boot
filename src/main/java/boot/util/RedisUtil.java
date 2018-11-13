@@ -523,4 +523,20 @@ private RedisTemplate<String, Object> redisTemplate;
             return 0;  
         }  
     }  
+    
+    public boolean setnx(String key ,Object value ,Long time){
+        try {  
+            boolean result = redisTemplate.opsForValue().setIfAbsent(key, value);
+            if(result == false){
+            	return result;
+            }else{
+            	redisTemplate.expire(key, time, TimeUnit.SECONDS);
+            }
+            return true;  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+            return false;  
+        }
+    	
+    }
 }

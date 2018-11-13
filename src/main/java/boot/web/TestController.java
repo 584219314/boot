@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import boot.aspect.RedisLock;
+import boot.enums.CrawlerEnum;
+import boot.factory.service.CrawlerService;
 import boot.shedule.model.CrawlerData;
+import boot.shedule.model.req.MainReq;
 import boot.shedule.service.master.CrawlerDataMasterService;
 import boot.shedule.service.slave.CrawlerDataSlaveService;
+import boot.util.RedisUtil;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.rocketmq.client.exception.MQBrokerException;
@@ -29,7 +34,11 @@ public class TestController {
     @Autowired
     CrawlerDataSlaveService crawlerDataSlaveService;
     @Autowired
-    DefaultMQProducer defaultMQProducer;
+    CrawlerService crawlerService;
+    @Autowired
+    RedisUtil redisUtil;
+    @Autowired
+    private DefaultMQProducer defaultMQProducer;
     /**
      * 测试 JSON 接口；
      *
@@ -69,5 +78,44 @@ public class TestController {
 			jsonObject.put("str", "失败");
 		}
         return jsonObject;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/gsny")
+    public JSONObject gsny() {
+    	JSONObject jsn = new JSONObject();
+    	String val = crawlerDataMasterService.testAspect();
+    	jsn.put("result", val);
+        return jsn;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/redis")
+    public JSONObject redis() {
+    	JSONObject jsn = new JSONObject();
+    	redisUtil.set("lsz", "lsz1", 10000);
+    	jsn.put("result", "1");
+        return jsn;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/mq")
+    public JSONObject mq() {
+    	Message msg = new Message("TEST",// topic
+                "TEST",// tag
+                "KKK",//key用于标识业务的唯一性
+                ("Hello RocketMQ !!!!!!!!!!" ).getBytes()// body 二进制字节数组
+        );
+
+    	try {
+			defaultMQProducer.send(msg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	JSONObject jsn = new JSONObject();
+    	redisUtil.set("lsz", "lsz1", 10000);
+    	jsn.put("result", "1");
+        return jsn;
     }
 }

@@ -7,17 +7,37 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import boot.RedisConfig;
+import boot.shedule.service.master.CrawlerDataMasterService;
 import boot.util.RedisUtil;
 
 @Component
 public class CrawTask {
-/*    @Autowired
+    @Autowired
     private RedisUtil redisUtil;
-    @Scheduled(fixedRate = 3000)
+    
+    @Autowired
+    CrawlerDataMasterService crawlerDataMasterService;
+    
+    //@Scheduled(fixedRate = 1000)
     public void process(){
-		redisUtil.set("lsz", "lsz", 1120);
-		redisUtil.set("lsz1", "lsz1", 2120);
-		redisUtil.set("lsz2", "lsz2", 3120);
-		redisUtil.set("lsz3", "lsz3", 4120);
-    }*/
+    	Runnable t= new Runnable() {
+    		
+			@Override
+			public void run() {
+				try {
+					crawlerDataMasterService.testAspect();
+				} catch (Exception e) {
+					System.out.println("错误捕捉");
+				}
+				
+			}
+		};
+		Thread th =new Thread(t);
+		th.start();
+		new Thread(t).start();
+		new Thread(t).start();
+		new Thread(t).start();
+		new Thread(t).start();
+		new Thread(t).start();
+    }
 }

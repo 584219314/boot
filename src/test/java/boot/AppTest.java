@@ -19,6 +19,7 @@ public class AppTest {
 	
 	@Test
 	public void craw(){
+		redisUtil.set("lsz", "test");
 	}
 }
 	
