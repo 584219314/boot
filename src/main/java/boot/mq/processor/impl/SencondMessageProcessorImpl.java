@@ -2,24 +2,21 @@ package boot.mq.processor.impl;
 
 import java.io.UnsupportedEncodingException;
 
-import boot.enums.CodeEnum;
-import boot.mq.processor.MessageProcessor;
-import boot.shedule.model.CrawlerData;
-import boot.shedule.service.master.CrawlerDataMasterService;
-
-import com.alibaba.rocketmq.common.message.MessageExt;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
- 
-/**
- * Created by eggyer on 2017/3/26.
- */
+
+import com.alibaba.rocketmq.common.message.MessageExt;
+
+import boot.enums.CodeEnum;
+import boot.mq.processor.MessageProcessor;
+import boot.shedule.model.CrawlerData;
+import boot.shedule.service.master.CrawlerDataMasterService;
+
 @Component
-public class MessageProcessorImpl implements MessageProcessor {
+public class SencondMessageProcessorImpl implements MessageProcessor{
 	
 	private  Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -28,8 +25,8 @@ public class MessageProcessorImpl implements MessageProcessor {
     @Value("${server.port}")
     String name;
     
-    @Override
-    public boolean handleMessage(MessageExt messageExt) {
+	@Override
+	public boolean handleMessage(MessageExt messageExt) {
     	CrawlerData record = new CrawlerData();
     	String content = null;
     	try {
@@ -43,5 +40,6 @@ public class MessageProcessorImpl implements MessageProcessor {
 		crawlerDataMasterService.insert(record );
         System.out.println("receive : " + messageExt.toString());
         return true;
-    }
+	}
+
 }

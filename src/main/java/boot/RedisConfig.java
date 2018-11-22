@@ -48,9 +48,9 @@ public class RedisConfig {
     @Value("${spring.redis.cluster.max-redirects}")
     private Integer mmaxRedirectsac;
     @Value("${redis.hostName}")
-    private String HostName;
+    private String hostName;
     @Value("${redis.port}")
-    private Integer Port;
+    private Integer port;
     @Value("${redis.password}")
     private String password;
     
@@ -93,19 +93,19 @@ public class RedisConfig {
     * @throws
      */
     @Bean
-    public JedisConnectionFactory JedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
-        JedisConnectionFactory JedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig);
+    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig);
         //连接池  
-        JedisConnectionFactory.setPoolConfig(jedisPoolConfig);  
+        jedisConnectionFactory.setPoolConfig(jedisPoolConfig);  
         //IP地址  
-        JedisConnectionFactory.setHostName(HostName);  
+        jedisConnectionFactory.setHostName(hostName);  
         //端口号  
-        JedisConnectionFactory.setPort(Port);  
+        jedisConnectionFactory.setPort(port);  
         //如果Redis设置有密码  
-        JedisConnectionFactory.setPassword(password);  
+        jedisConnectionFactory.setPassword(password);  
         //客户端超时时间单位是毫秒  
-        JedisConnectionFactory.setTimeout(5000);  
-        return JedisConnectionFactory; 
+        jedisConnectionFactory.setTimeout(5000);  
+        return jedisConnectionFactory; 
     }
 
     /**

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 
 
+
 import com.alibaba.dubbo.common.utils.StringUtils;
 
 import boot.aspect.RedisLock;
@@ -29,6 +30,7 @@ import boot.shedule.model.CrawlerData;
 import boot.shedule.model.req.CrawlerDocToDataReq;
 import boot.shedule.model.req.CrawlerSetDataReq;
 import boot.shedule.model.req.FlipReq;
+import boot.shedule.model.req.MainReq;
 import boot.shedule.model.res.CrawlerDocToDataRes;
 import boot.shedule.model.res.CrawlerSetDataRes;
 import boot.shedule.model.res.FlipRes;
@@ -102,5 +104,11 @@ public class GsBankServiceImpl extends AbstractCrawlerImpl{
 	@Override
 	public String testAspect(String code) {
 		return String.valueOf(redisUtil.get("testAspect"));
+	}
+
+	@Override
+	public void main(MainReq req) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 }

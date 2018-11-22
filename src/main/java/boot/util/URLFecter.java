@@ -34,14 +34,14 @@ import com.alibaba.fastjson.JSONObject;
  *  合肥工业大学 管理学院 qianyang 1563178220@qq.com
  */
 public class URLFecter {
-    public static String URLParser (HttpClient client, String url) throws Exception {
+    public static String uRLParser (HttpClient client, String url) throws Exception {
         //获取网站响应的html，这里调用了HTTPUtils类
-        HttpResponse response = HTTPUtils.getRawHtml(client, url);      
+        HttpResponse response = AbstractHTTPUtils.getRawHtml(client, url);      
         //获取响应状态码
-        int StatusCode = response.getStatusLine().getStatusCode();
+        int statusCode = response.getStatusLine().getStatusCode();
         //如果状态响应码为200，则获取html实体内容或者json文件
         String entity = null;
-        if(StatusCode == 200){
+        if(statusCode == 200){
             entity = EntityUtils.toString (response.getEntity(),"utf-8");    
             EntityUtils.consume(response.getEntity());
         }else {
@@ -54,11 +54,11 @@ public class URLFecter {
     
     private static void test2() throws Exception {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		String url_str = "http://localhost:8000/oauth/token?scope=read&grant_type=client_credentials";
+		String urlStr = "http://localhost:8000/oauth/token?scope=read&grant_type=client_credentials";
 		// 用户名:密码
 		String encoding = new String(Base64.encodeBase64(StringUtils.getBytesUtf8("test_client:test_secret")));
 		try {
-			HttpPost httpget = new HttpPost(url_str);
+			HttpPost httpget = new HttpPost(urlStr);
 			// 向header中设置参数
 			httpget.addHeader("Authorization", "Basic " + encoding);
 			CloseableHttpResponse response = httpclient.execute(httpget);

@@ -6,6 +6,7 @@ import boot.mq.processor.MessageProcessor;
 
 import com.alibaba.rocketmq.client.consumer.DefaultMQPushConsumer;
 import com.alibaba.rocketmq.client.exception.MQClientException;
+import com.alibaba.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -29,8 +30,10 @@ public class RocketMQConsumerConfiguration {
     private String groupName;
     @Value("${rocketmq.consumer.topic}")
     private String topic;
-    @Value("${rocketmq.consumer.tag}")
-    private String tag;
+    @Value("${rocketmq.consumer.groupSencondName}")
+    private String groupSencondName;
+    @Value("${rocketmq.consumer.sencond.topic}")
+    private String sencondTopic;
     @Value("${rocketmq.consumer.consumeThreadMin}")
     private int consumeThreadMin;
     @Value("${rocketmq.consumer.consumeThreadMax}")
@@ -39,21 +42,20 @@ public class RocketMQConsumerConfiguration {
     @Autowired
     @Qualifier("messageProcessorImpl")
     private MessageProcessor messageProcessor;
- 
-    @Bean
-    public DefaultMQPushConsumer getRocketMQConsumer() throws RocketMQException {
-        if (StringUtils.isBlank(groupName)){
-            throw new RocketMQException("groupName is null !!!");
-        }
-        if (StringUtils.isBlank(namesrvAddr)){
-            throw new RocketMQException("namesrvAddr is null !!!");
-        }
-        if (StringUtils.isBlank(topic)){
-            throw new RocketMQException("topic is null !!!");
-        }
-        if (StringUtils.isBlank(tag)){
-            throw new RocketMQException("tag is null !!!");
-        }
+    
+    @Autowired
+    @Qualifier("sencondMessageProcessorImpl")
+    private MessageProcessor sencondMessageProcessor;
+    /**
+     * 
+     * @param namesrvAddr 消息地址
+     * @param groupName 组名
+     * @param messageProcessor 监听实现类
+     * @param model 消息消费类型
+     * @return
+     * @throws RocketMQException
+     */
+    private DefaultMQPushConsumer innitConsumerBean(String groupName,MessageProcessor messageProcessor,MessageModel model) throws RocketMQException{
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(groupName);
         consumer.setNamesrvAddr(namesrvAddr);
         consumer.setConsumeThreadMin(consumeThreadMin);
@@ -61,12 +63,33 @@ public class RocketMQConsumerConfiguration {
         MessageListener messageListener = new MessageListener();
         messageListener.setMessageProcessor(messageProcessor);
         consumer.registerMessageListener(messageListener);
+        consumer.setMessageModel(model); //广播模式
+		return consumer;
+    }
+    
+    @Bean("mqPushConsumer")
+    public DefaultMQPushConsumer getFirstRocketMQConsumer() throws RocketMQException {
+    	DefaultMQPushConsumer consumer = innitConsumerBean(groupName,messageProcessor,MessageModel.CLUSTERING);
         try {
-            consumer.subscribe(topic,this.tag);
+            consumer.subscribe(topic,"*");
             consumer.start();
             LOGGER.info("consumer is start !!! groupName:{},topic:{},namesrvAddr:{}",groupName,topic,namesrvAddr);
         }catch (MQClientException e){
             LOGGER.error("consumer is start !!! groupName:{},topic:{},namesrvAddr:{}",groupName,topic,namesrvAddr,e);
+            throw new RocketMQException(e);
+        }
+        return consumer;
+    }
+    
+    @Bean("sencondMQPushConsumer")
+    public DefaultMQPushConsumer getSencondRocketMQConsumer() throws RocketMQException {
+    	DefaultMQPushConsumer consumer = innitConsumerBean(groupSencondName,sencondMessageProcessor,MessageModel.CLUSTERING);
+        try {
+            consumer.subscribe(sencondTopic,"*");
+            consumer.start();
+            LOGGER.info("consumer is start !!! groupName:{},topic:{},namesrvAddr:{}",groupSencondName,sencondTopic,namesrvAddr);
+        }catch (MQClientException e){
+            LOGGER.error("consumer is start !!! groupName:{},topic:{},namesrvAddr:{}",groupSencondName,sencondTopic,namesrvAddr,e);
             throw new RocketMQException(e);
         }
         return consumer;

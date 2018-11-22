@@ -183,7 +183,7 @@ public class CheckParamUtil {
      * @param bizMsg
      *            给渠道层用户展示的错误信息
      */
-    public static void CheckStringEqualsIgnoreCase(String param1, String param2, String bizMsg) {
+    public static void checkStringEqualsIgnoreCase(String param1, String param2, String bizMsg) {
         if (!StringUtil.equalsIgnoreCase(param1, param2)) {
             throw new BizException(BizException.PARAM_ERROR.getCode(), bizMsg);
         }
@@ -199,7 +199,7 @@ public class CheckParamUtil {
      * @param bizMsg
      *            给渠道层用户展示的错误信息
      */
-    public static void CheckStringNotEquals(String param1, String param2, String bizMsg) {
+    public static void checkStringNotEquals(String param1, String param2, String bizMsg) {
         if (StringUtil.equals(param1, param2)) {
             throw new BizException(BizException.PARAM_ERROR.getCode(), bizMsg);
         }
@@ -215,7 +215,7 @@ public class CheckParamUtil {
      * @param bizMsg
      *            给渠道层用户展示的错误信息
      */
-    public static void CheckStringNotEqualsIgnoreCase(String param1, String param2, String bizMsg) {
+    public static void checkStringNotEqualsIgnoreCase(String param1, String param2, String bizMsg) {
         if (StringUtil.equalsIgnoreCase(param1, param2)) {
             throw new BizException(BizException.PARAM_ERROR.getCode(), bizMsg);
         }
@@ -445,7 +445,8 @@ public class CheckParamUtil {
      * @param str 字符串
      */
     public static void checkTimeNotGreaterThanTime(String startTime, String endTime, String bizMsg) {
-        if ((startTime.compareTo(endTime)) >= 0)
-            throw new BizException(BizException.PARAM_ERROR.getCode(), bizMsg);
+        if ((startTime.compareTo(endTime)) >= 0){
+        	throw new BizException(BizException.PARAM_ERROR.getCode(), bizMsg);
+        }
     }
 }

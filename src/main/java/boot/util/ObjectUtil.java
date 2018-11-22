@@ -93,10 +93,12 @@ public class ObjectUtil {
      * @return boolean 返回的布尔值
      */
     public static final boolean isEmpty(Object pObj) {
-        if (pObj == null)
-            return true;
-        if (pObj == "")
-            return true;
+        if (pObj == null){
+        	return true;
+        }
+        if (pObj == ""){
+        	return true;
+        }
         if (pObj instanceof String) {
             if (((String) pObj).trim().length() == 0) {
                 return true;
@@ -121,10 +123,12 @@ public class ObjectUtil {
      * @return boolean 返回的布尔值
      */
     public static final boolean isNotEmpty(Object pObj) {
-        if (pObj == null)
-            return false;
-        if (pObj == "")
-            return false;
+        if (pObj == null){
+        	return false;
+        }
+        if (pObj == ""){
+        	return false;
+        }
         if (pObj instanceof String) {
             if (((String) pObj).trim().length() == 0) {
                 return false;

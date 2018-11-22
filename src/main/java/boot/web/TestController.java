@@ -99,12 +99,12 @@ public class TestController {
     }
     
     @ResponseBody
-    @RequestMapping("/mq")
-    public JSONObject mq() {
-    	Message msg = new Message("TEST",// topic
-                "TEST",// tag
-                "KKK",//key用于标识业务的唯一性
-                ("Hello RocketMQ !!!!!!!!!!" ).getBytes()// body 二进制字节数组
+    @RequestMapping("/mq/{topic}/{content}")
+    public JSONObject mq(@PathVariable("content")String content,@PathVariable("topic")String topic) {
+    	Message msg = new Message(topic,// topic
+                "",// tag
+                String.valueOf(System.currentTimeMillis()),//key用于标识业务的唯一性
+                content.getBytes()// body 二进制字节数组
         );
 
     	try {

@@ -306,8 +306,9 @@ public class DateUtil extends DateUtils {
      * @return int
      */
     public static int secondsBetween(Date compareTime, Date currentTime) {
-        if (compareTime == null || currentTime == null)
-            return 0;
+        if (compareTime == null || currentTime == null){
+        	return 0;
+        }
         return (int) ((compareTime.getTime() - currentTime.getTime()) / 1000L);
     }
 
@@ -445,8 +446,9 @@ public class DateUtil extends DateUtils {
             int daysDiff = 0;
             for (int i = startYear; i < year; i++) {
                 daysDiff += 365;
-                if (isGregorianLeapYear(i))
-                    daysDiff += 1; // leap year
+                if (isGregorianLeapYear(i)){
+                	daysDiff += 1; // leap year
+                }
             }
             for (int i = startMonth; i < month; i++) {
                 daysDiff += daysInGregorianMonth(year, i);
@@ -457,8 +459,9 @@ public class DateUtil extends DateUtils {
             int lastDay = daysInChineseMonth(chineseYear, chineseMonth);
             int nextMonth = nextChineseMonth(chineseYear, chineseMonth);
             while (chineseDay > lastDay) {
-                if (Math.abs(nextMonth) < Math.abs(chineseMonth))
-                    chineseYear++;
+                if (Math.abs(nextMonth) < Math.abs(chineseMonth)){
+                	chineseYear++;
+                }
                 chineseMonth = nextMonth;
                 chineseDay -= lastDay;
                 lastDay = daysInChineseMonth(chineseYear, chineseMonth);
@@ -474,6 +477,7 @@ public class DateUtil extends DateUtils {
             return new Integer(((chineseYear - 1) % 12));
         }
 
+        @Override
         public String toString() {
             StringBuffer buff = new StringBuffer();
             buff.append(stemNames[(chineseYear - 1) % 10]); //天干纪年
@@ -525,12 +529,15 @@ public class DateUtil extends DateUtils {
 
         private boolean isGregorianLeapYear(int year) {
             boolean isLeap = false;
-            if (year % 4 == 0)
-                isLeap = true;
-            if (year % 100 == 0)
-                isLeap = false;
-            if (year % 400 == 0)
-                isLeap = true;
+            if (year % 4 == 0){
+            	isLeap = true;
+            }
+            if (year % 100 == 0){
+            	isLeap = false;
+            }
+            if (year % 400 == 0){
+            	isLeap = true;
+            }
             return isLeap;
         }
 
@@ -547,13 +554,15 @@ public class DateUtil extends DateUtils {
             if (1 <= m && m <= 8) {
                 v = chineseMonths[2 * index];
                 l = m - 1;
-                if (((v >> l) & 0x01) == 1)
-                    d = 29;
+                if (((v >> l) & 0x01) == 1){
+                	d = 29;
+                }
             } else if (9 <= m && m <= 12) {
                 v = chineseMonths[2 * index + 1];
                 l = m - 9;
-                if (((v >> l) & 0x01) == 1)
-                    d = 29;
+                if (((v >> l) & 0x01) == 1){
+                	d = 29;
+                }
             } else {
                 v = chineseMonths[2 * index + 1];
                 v = (v >> 4) & 0x0F;
@@ -582,11 +591,13 @@ public class DateUtil extends DateUtils {
                 int index = y - 4597;
                 int v = chineseMonths[2 * index + 1];
                 v = (v >> 4) & 0x0F;
-                if (v == m)
-                    n = -m;
+                if (v == m){
+                	 n = -m;
+                }
             }
-            if (n == 13)
-                n = 1;
+            if (n == 13){
+            	n = 1;
+            }
             return n;
         }
 
@@ -596,8 +607,9 @@ public class DateUtil extends DateUtils {
 
         private int daysInGregorianMonth(int y, int m) {
             int d = daysInGregorianMonth[m - 1];
-            if (m == 2 && isGregorianLeapYear(y))
-                d++; // 公历闰年二月多一天
+            if (m == 2 && isGregorianLeapYear(y)){
+            	d++; // 公历闰年二月多一天
+            }
             return d;
         }
     }
@@ -610,32 +622,45 @@ public class DateUtil extends DateUtils {
     */
     @SuppressWarnings("deprecation")
     public static Integer getConstellation(Date date) throws Exception {
-        if (null == date)
-            throw new NullPointerException("日期参数为空");
-        if ((isDateInRange(date, new Date(date.getYear(), 11, 22), new Date(date.getYear(), 11, 31))) || (isDateInRange(date, new Date(date.getYear(), 0, 1), new Date(date.getYear(), 0, 19))))
+        if (null == date){
+        	throw new NullPointerException("日期参数为空");
+        }
+        if ((isDateInRange(date, new Date(date.getYear(), 11, 22), new Date(date.getYear(), 11, 31))) || (isDateInRange(date, new Date(date.getYear(), 0, 1), new Date(date.getYear(), 0, 19)))){
             return ConstellationConstants.CAPRICORN;
-        else if (isDateInRange(date, new Date(date.getYear(), 0, 20), new Date(date.getYear(), 1, 18)))
-            return ConstellationConstants.AQUARIUS;
-        else if (isDateInRange(date, new Date(date.getYear(), 1, 19), new Date(date.getYear(), 2, 20)))
-            return ConstellationConstants.PISCES;
-        else if (isDateInRange(date, new Date(date.getYear(), 2, 21), new Date(date.getYear(), 3, 20)))
-            return ConstellationConstants.ARIES;
-        else if (isDateInRange(date, new Date(date.getYear(), 3, 21), new Date(date.getYear(), 4, 20)))
-            return ConstellationConstants.TAURUS;
-        else if (isDateInRange(date, new Date(date.getYear(), 4, 21), new Date(date.getYear(), 5, 21)))
-            return ConstellationConstants.GEMINI;
-        else if (isDateInRange(date, new Date(date.getYear(), 5, 22), new Date(date.getYear(), 6, 22)))
-            return ConstellationConstants.CANCER;
-        else if (isDateInRange(date, new Date(date.getYear(), 6, 23), new Date(date.getYear(), 7, 22)))
-            return ConstellationConstants.LEO;
-        else if (isDateInRange(date, new Date(date.getYear(), 7, 23), new Date(date.getYear(), 8, 22)))
-            return ConstellationConstants.VIRGO;
-        else if (isDateInRange(date, new Date(date.getYear(), 8, 23), new Date(date.getYear(), 9, 22)))
-            return ConstellationConstants.LIBRA;
-        else if (isDateInRange(date, new Date(date.getYear(), 9, 23), new Date(date.getYear(), 10, 21)))
-            return ConstellationConstants.SCORPIO;
-        else if (isDateInRange(date, new Date(date.getYear(), 10, 22), new Date(date.getYear(), 11, 21)))
-            return ConstellationConstants.ARCHER;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 0, 20), new Date(date.getYear(), 1, 18))){
+        	return ConstellationConstants.AQUARIUS;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 1, 19), new Date(date.getYear(), 2, 20))){
+        	return ConstellationConstants.PISCES;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 2, 21), new Date(date.getYear(), 3, 20))){
+        	return ConstellationConstants.ARIES;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 3, 21), new Date(date.getYear(), 4, 20))){
+        	return ConstellationConstants.TAURUS;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 4, 21), new Date(date.getYear(), 5, 21))){
+        	return ConstellationConstants.GEMINI;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 5, 22), new Date(date.getYear(), 6, 22))){
+        	return ConstellationConstants.CANCER;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 6, 23), new Date(date.getYear(), 7, 22))){
+        	return ConstellationConstants.LEO;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 7, 23), new Date(date.getYear(), 8, 22))){
+        	return ConstellationConstants.VIRGO;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 8, 23), new Date(date.getYear(), 9, 22))){
+        	return ConstellationConstants.LIBRA;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 9, 23), new Date(date.getYear(), 10, 21))){
+        	return ConstellationConstants.SCORPIO;
+        }
+        else if (isDateInRange(date, new Date(date.getYear(), 10, 22), new Date(date.getYear(), 11, 21))){
+        	return ConstellationConstants.ARCHER;
+        }
         throw new Exception("星座转换出错");
     }
 
@@ -650,8 +675,9 @@ public class DateUtil extends DateUtils {
     public static boolean isDateInRange(Date date, Date from, Date to) {
         if ((date.after(from) && date.before(to)) || date.compareTo(from) == 0 || date.compareTo(to) == 0) {
             return true;
-        } else
-            return false;
+        } else{
+        	return false;
+        }
     }
 
     /**
@@ -662,17 +688,21 @@ public class DateUtil extends DateUtils {
     public static String getLastLoginTimeString(Date lastSignonTime) {
         int day = daysBetween(new Date(), lastSignonTime);
         String lastLoginTime = "";
-        if (day <= 1)
-            lastLoginTime = "24小时内";
-        if (day > 1 && day <= 3)
-            lastLoginTime = "3天内";
-        else if (day > 3 && day <= 7)
-            lastLoginTime = "1个星期内";
-        else if (day > 7 && day <= 15)
-            lastLoginTime = "半个月内";
-        else if (day > 15)
-            lastLoginTime = "半月以上";
-
+        if (day <= 1){
+        	lastLoginTime = "24小时内";
+        }
+        if (day > 1 && day <= 3){
+        	lastLoginTime = "3天内";
+        }
+        else if (day > 3 && day <= 7){
+        	lastLoginTime = "1个星期内";
+        }
+        else if (day > 7 && day <= 15){
+        	lastLoginTime = "半个月内";
+        }
+        else if (day > 15){
+        	lastLoginTime = "半月以上";
+        }
         return lastLoginTime;
     }
 
@@ -687,8 +717,9 @@ public class DateUtil extends DateUtils {
      *         a negative number will be returned.
      */
     public static int daysBetween(Date date1, Date date2) {
-        if (date1 == null || date2 == null)
-            return 0;
+        if (date1 == null || date2 == null){
+        	return 0;
+        }
         GregorianCalendar cal1 = new GregorianCalendar();
         cal1.setTime(date1);
         GregorianCalendar cal2 = new GregorianCalendar();
@@ -942,12 +973,15 @@ public class DateUtil extends DateUtils {
         time = time - hour * 60 * 1000 * 60;
         long mi = time / (60 * 1000);
         time = time - mi * 60 * 1000;
-        if (day > 0)
-            return day + "天前";
-        else if (hour > 0)
-            return hour + "小时前";
-        else if (mi > 0 && mi < 30)
-            return mi + "分钟前";
+        if (day > 0){
+        	return day + "天前";
+        }
+        else if (hour > 0){
+        	return hour + "小时前";
+        }
+        else if (mi > 0 && mi < 30){
+        	return mi + "分钟前";
+        }
         return "刚刚";
     }
 
@@ -1072,7 +1106,7 @@ public class DateUtil extends DateUtils {
         return (int) ((dayMaxLongTime - currentLongTime) / 1000);
     }
     
-    public static long compare_date(Date dt1, Date dt2) {
+    public static long compareDate(Date dt1, Date dt2) {
         if (dt1.getTime() > dt2.getTime()) {
             return -1;
         } else if (dt1.getTime() < dt2.getTime()) {

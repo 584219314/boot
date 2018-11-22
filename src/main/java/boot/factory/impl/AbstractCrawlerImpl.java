@@ -34,8 +34,6 @@ public abstract class AbstractCrawlerImpl implements CrawlerService,Initializing
 	
 	protected abstract String getUrl();
 	@Autowired
-	CrawlerDataMasterMapper CrawlerDataMasterMapper;
-	@Autowired
 	private CrawlerFactory crawlerFactory;
 	@Autowired
 	private CrawlerService crawlerService;
@@ -71,6 +69,7 @@ public abstract class AbstractCrawlerImpl implements CrawlerService,Initializing
 		} 
 		return res;
 	}
+	@Override
 	public void main(MainReq reqMain) throws Exception{
 		String code = reqMain.getCode();
 		// 初始化一个httpclient
@@ -80,7 +79,7 @@ public abstract class AbstractCrawlerImpl implements CrawlerService,Initializing
 		int page = 0;
 		do{
 		// 抓取的数据
-		String html = URLFecter.URLParser(client, url);
+		String html = URLFecter.uRLParser(client, url);
 		System.out.println(url);
 		if(stop(html)){//暂停爬虫
 			break;

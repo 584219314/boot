@@ -49,7 +49,7 @@ public class RedisLockAspect {
 	}
 
 	@Around("redisLock()")
-	public Object AroundCall(ProceedingJoinPoint joinPoint) {
+	public Object aroundCall(ProceedingJoinPoint joinPoint) {
 		System.out.println("环绕通知之开始");
 		Object result = null;
 		try {

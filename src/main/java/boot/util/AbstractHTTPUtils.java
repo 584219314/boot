@@ -23,7 +23,7 @@ import org.apache.http.message.BasicHttpResponse;
 /*   
  *  合肥工业大学 管理学院 qianyang 1563178220@qq.com
  */
-public abstract class HTTPUtils {
+public abstract class AbstractHTTPUtils {
 	public static HttpResponse getRawHtml(HttpClient client, String personalUrl) {
 		// 获取响应文件，即html，采用get方法获取响应数据
 		HttpGet getMethod = new HttpGet(personalUrl);
@@ -62,7 +62,7 @@ public abstract class HTTPUtils {
 		try {
 			List<String> ipList = new ArrayList<String>();
 			InputStream in = new FileInputStream(
-					HTTPUtils.class.getClassLoader().getResource("/").getPath()+"/proxyip.txt");// 读取文件的数据。
+					AbstractHTTPUtils.class.getClassLoader().getResource("/").getPath()+"/proxyip.txt");// 读取文件的数据。
 			BufferedReader proxyIpReader = new BufferedReader(
 					new InputStreamReader(in));
 			String ip = "";

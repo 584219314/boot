@@ -42,57 +42,57 @@ public class CrawlerData extends BaseEntity {
 	public Integer getId(){
 		return this.id;
 	}
-	public void setId(Integer Id) {
-        this.id=Id;
+	public void setId(Integer id) {
+        this.id=id;
     }
 	/** Name */
 	public String getName(){
 		return this.name;
 	}
-	public void setName(String Name) {
-        this.name=Name;
+	public void setName(String name) {
+        this.name=name;
     }
 	/** Pice */
 	public BigDecimal getPice(){
 		return this.pice;
 	}
-	public void setPice(BigDecimal Pice) {
-        this.pice=Pice;
+	public void setPice(BigDecimal pice) {
+        this.pice=pice;
     }
 	/** Url */
 	public String getUrl(){
 		return this.url;
 	}
-	public void setUrl(String Url) {
-        this.url=Url;
+	public void setUrl(String url) {
+        this.url=url;
     }
 	/** CreateTime */
 	public Date getCreateTime(){
 		return this.createTime;
 	}
-	public void setCreateTime(Date CreateTime) {
-        this.createTime=CreateTime;
+	public void setCreateTime(Date createTime) {
+        this.createTime=createTime;
     }
 	/** UpdateTime */
 	public Date getUpdateTime(){
 		return this.updateTime;
 	}
-	public void setUpdateTime(Date UpdateTime) {
-        this.updateTime=UpdateTime;
+	public void setUpdateTime(Date updateTime) {
+        this.updateTime=updateTime;
     }
 	/** Code */
 	public String getCode(){
 		return this.code;
 	}
-	public void setCode(String Code) {
-        this.code=Code;
+	public void setCode(String code) {
+        this.code=code;
     }
 	/** CodeId */
 	public String getCodeId(){
 		return this.codeId;
 	}
-	public void setCodeId(String CodeId) {
-        this.codeId=CodeId;
+	public void setCodeId(String codeId) {
+        this.codeId=codeId;
     }
 
 	@Override
